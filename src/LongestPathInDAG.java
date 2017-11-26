@@ -97,7 +97,7 @@ public class LongestPathInDAG {
         private void updateMaxDistanceForAllAdjVertices() {
             while (!stack.isEmpty()) {
                 int from = stack.pop();
-                if (distances[  from] != Integer.MIN_VALUE) {
+                if (distances[from] != Integer.MIN_VALUE) {
                     for (int adjacent = 0; adjacent < V; adjacent++) {
                         if (matrix[from][adjacent] != 0) {
                             if (distances[adjacent] < distances[from] + matrix[from][adjacent]) {
