@@ -26,6 +26,33 @@ public class WightedDirectedGraph {
 
     }
 
+    public void topologicalSortUtil(Integer i, LinkedList<String> visited, Stack<Node> stack) {
+        Node node = nodes[i];
+        if (node != null) {
+            visited.add(node.getLabel());
+            List<Edge> edges = node.getEdges();
+            if (edges != null) {
+                for (Edge edge : edges) {
+                    if (!visited.contains(edge.getDestination().getLabel()))
+                        topologicalSortUtil(Integer.parseInt(edge.getDestination().getLabel()), visited, stack);
+                }
+            }
+            stack.push(node);
+        }
+    }
+
+    public void topologicalSort() {
+        LinkedList<String> visited = new LinkedList<String>();
+        Stack<Node> stack = new Stack<Node>();
+        for (int i = 1; i < VERTICES - 1; i++) {
+            topologicalSortUtil(i, visited, stack);
+        }
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop().getLabel());
+        }
+    }
+
+
     public void display() {
         for (int i = 1; i < VERTICES - 1; i++) {
             String from = nodes[i].getLabel();
@@ -66,7 +93,12 @@ public class WightedDirectedGraph {
         graph.createNode(1, 3, 4);
         graph.createNode(2, 4, 1);
         graph.createNode(3, 4, 2);
-        graph.display();
-        graph.maxDistancePath();
+//        graph.display();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        graph.topologicalSort();
     }
 }
