@@ -54,12 +54,15 @@ public class WightedDirectedGraph {
 
 
     public void display() {
-        for (int i = 1; i < VERTICES - 1; i++) {
-            String from = nodes[i].getLabel();
-            nodes[i].getEdges().stream().forEach(item -> {
-                System.out.print(from + "--|" + item.getWeight() + "|--" + item.getDestination().getLabel() + " ,");
-            });
-            System.out.println();
+        for (int i = 0; i < VERTICES - 1; i++) {
+            if (nodes[i] != null) {
+                String from = nodes[i].getLabel();
+                List<Edge> edges = nodes[i].getEdges();
+                if (edges != null)
+                    for (Edge item : edges) {
+                        System.out.println(from + "--|" + item.getWeight() + "|--" + item.getDestination().getLabel());
+                    }
+            }
         }
     }
 
@@ -88,17 +91,14 @@ public class WightedDirectedGraph {
     }
 
     public static void main(String[] args) {
-        WightedDirectedGraph graph = new WightedDirectedGraph(5);
-        graph.createNode(1, 2, 5);
-        graph.createNode(1, 3, 4);
-        graph.createNode(2, 4, 1);
-        graph.createNode(3, 4, 2);
-//        graph.display();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        graph.topologicalSort();
+        WightedDirectedGraph graph = new WightedDirectedGraph(6);
+        graph.createNode(0, 1, 3);
+        graph.createNode(0, 4, 1);
+        graph.createNode(1, 2, 1);
+        graph.createNode(1, 4, 1);
+        graph.createNode(1, 3, 3);
+        graph.createNode(4, 2, 2);
+        graph.createNode(4, 3, 1);
+        graph.display();
     }
 }
